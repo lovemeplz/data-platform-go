@@ -1,0 +1,54 @@
+info:
+  contact: {}
+paths:
+  /api/v1/sys/roles:
+    get:
+      description: 这是一段接口描述
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 获取角色列表
+      tags:
+      - 系统管理
+    post:
+      description: 这是一段接口描述
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 新增角色
+      tags:
+      - 系统管理
+  /api/v1/sys/roles/:id:
+    delete:
+      description: 这是一段接口描述
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 删除角色
+      tags:
+      - 系统管理
+    put:
+      description: 这是一段接口描述
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 编辑角色
+      tags:
+      - 系统管理
+swagger: "2.0"

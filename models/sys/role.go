@@ -42,6 +42,18 @@ func AddRoles(data map[string]interface{}) bool {
 	return true
 }
 
+func EditRoles(id int, data map[string]interface{}) bool {
+	models.Db.AutoMigrate(&Role{})
+	models.Db.Model(&Role{}).Where("id = ?", id).Updates(data)
+	return true
+}
+
+func DeleteRoles(id int) bool {
+	models.Db.AutoMigrate(&Role{})
+	models.Db.Where("id = ?", id).Delete(&Role{})
+	return true
+}
+
 func (role *Role) BeforeCreate(scope *gorm.Scope) error {
 	scope.SetColumn("CreatedOn", time.Now().Unix())
 
