@@ -6,77 +6,50 @@ import (
 	"time"
 )
 
-type Tag struct {
+type Role struct {
 	models.Model
-
-	Name       string `json:"name"`
-	CreatedBy  string `json:"created_by"`
-	ModifiedBy string `json:"modified_by"`
-	State      int    `json:"state"`
+	Code           string `json:"code"`
+	Name           string `json:"name"`
+	AssignedPerson string `json:"assigned_person"`
+	State          int    `json:"state"`
+	Remark         string `json:"remark"`
+	CreatedBy      string `json:"created_by"`
+	ModifiedBy     string `json:"modified_by"`
 }
 
-func GetTags(pageNum int, pageSize int, maps interface{}) (tags []Tag) {
-	models.db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&tags)
+func GetRoles(pageNum int, pageSize int, maps interface{}) (roles []Role) {
+	models.Db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&roles)
+	return
+}
+
+func GetRolesTotal(maps interface{}) (count int) {
+	models.Db.Model(&Role{}).Where(maps).Count(&count)
 
 	return
 }
 
-func GetTagTotal(maps interface{}) (count int) {
-	models.db.Model(&Tag{}).Where(maps).Count(&count)
-
-	return
-}
-
-func ExistTagByName(name string) bool {
-	var tag Tag
-	models.db.Select("id").Where("name = ?", name).First(&tag)
-	if tag.ID > 0 {
-		return true
-	}
-
-	return false
-}
-
-func AddTag(name string, state int, createdBy string) bool {
-	models.db.Create(&Tag{
-		Name:      name,
-		State:     state,
-		CreatedBy: createdBy,
+func AddRoles(data map[string]interface{}) bool {
+	models.Db.AutoMigrate(&Role{})
+	models.Db.Create(&Role{
+		Code:           data["code"].(string),
+		Name:           data["name"].(string),
+		AssignedPerson: data["assigned_person"].(string),
+		State:          data["state"].(int),
+		Remark:         data["remark"].(string),
+		CreatedBy:      data["created_by"].(string),
+		ModifiedBy:     data["modified_by"].(string),
 	})
-
 	return true
 }
 
-func (tag *Tag) BeforeCreate(scope *gorm.Scope) error {
+func (role *Role) BeforeCreate(scope *gorm.Scope) error {
 	scope.SetColumn("CreatedOn", time.Now().Unix())
 
 	return nil
 }
 
-func (tag *Tag) BeforeUpdate(scope *gorm.Scope) error {
+func (role *Role) BeforeUpdate(scope *gorm.Scope) error {
 	scope.SetColumn("ModifiedOn", time.Now().Unix())
 
 	return nil
-}
-
-func ExistTagByID(id int) bool {
-	var tag Tag
-	models.db.Select("id").Where("id = ?", id).First(&tag)
-	if tag.ID > 0 {
-		return true
-	}
-
-	return false
-}
-
-func DeleteTag(id int) bool {
-	models.db.Where("id = ?", id).Delete(&Tag{})
-
-	return true
-}
-
-func EditTag(id int, data interface{}) bool {
-	models.db.Model(&Tag{}).Where("id = ?", id).Updates(data)
-
-	return true
 }

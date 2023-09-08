@@ -7,11 +7,12 @@ import (
 )
 
 var (
-	RunMode string
-
+	RunMode      string
 	HTTPPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
+
+	PageSize int
 )
 
 var Cfg = viper.New()
@@ -46,5 +47,5 @@ func LoadServer() {
 }
 
 func LoadApp() {
-
+	PageSize = Cfg.GetInt("server.PAGE_SIZE")
 }
