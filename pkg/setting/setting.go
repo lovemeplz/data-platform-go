@@ -12,7 +12,8 @@ var (
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 
-	PageSize int
+	PageSize  int
+	JwtSecret string
 )
 
 var Cfg = viper.New()
@@ -47,5 +48,6 @@ func LoadServer() {
 }
 
 func LoadApp() {
-	PageSize = Cfg.GetInt("server.PAGE_SIZE")
+	PageSize = Cfg.GetInt("app.PAGE_SIZE")
+	JwtSecret = Cfg.GetString("app.JwtSecret")
 }

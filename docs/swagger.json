@@ -14,9 +14,29 @@
                     "系统管理"
                 ],
                 "summary": "获取角色列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色编码",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "角色名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "角色状态",
+                        "name": "state",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "description": "{\"code\":200,\"data\":[list:[{},{}],total:10],\"msg\":\"ok\"}",
                         "schema": {
                             "type": "string"
                         }

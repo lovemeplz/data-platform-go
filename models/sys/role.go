@@ -8,13 +8,13 @@ import (
 
 type Role struct {
 	models.Model
-	Code           string `json:"code"`
-	Name           string `json:"name"`
-	AssignedPerson string `json:"assigned_person"`
-	State          int    `json:"state"`
-	Remark         string `json:"remark"`
-	CreatedBy      string `json:"created_by"`
-	ModifiedBy     string `json:"modified_by"`
+	Code         string `json:"code" validate:"required"`
+	Name         string `json:"name" validate:"required"`
+	AssignedUser string `json:"assigned_user"`
+	State        *int   `json:"state" validate:"required"`
+	Remark       string `json:"remark"`
+	CreatedBy    string `json:"created_by"`
+	ModifiedBy   string `json:"modified_by"`
 }
 
 func GetRoles(pageNum int, pageSize int, maps interface{}) (roles []Role) {
@@ -24,21 +24,12 @@ func GetRoles(pageNum int, pageSize int, maps interface{}) (roles []Role) {
 
 func GetRolesTotal(maps interface{}) (count int) {
 	models.Db.Model(&Role{}).Where(maps).Count(&count)
-
 	return
 }
 
-func AddRoles(data map[string]interface{}) bool {
+func AddRoles(role Role) bool {
 	models.Db.AutoMigrate(&Role{})
-	models.Db.Create(&Role{
-		Code:           data["code"].(string),
-		Name:           data["name"].(string),
-		AssignedPerson: data["assigned_person"].(string),
-		State:          data["state"].(int),
-		Remark:         data["remark"].(string),
-		CreatedBy:      data["created_by"].(string),
-		ModifiedBy:     data["modified_by"].(string),
-	})
+	models.Db.Create(&role)
 	return true
 }
 

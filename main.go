@@ -18,7 +18,7 @@ func main() {
 		WriteTimeout:   setting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
-	fmt.Println(banner.Inline("data platform-go"))
+	fmt.Println(banner.Inline("data-platform-go"))
 	s.ListenAndServe()
 
 }

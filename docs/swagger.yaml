@@ -4,11 +4,24 @@ paths:
   /api/v1/sys/roles:
     get:
       description: 这是一段接口描述
+      parameters:
+      - description: 角色编码
+        in: query
+        name: code
+        type: string
+      - description: 角色名称
+        in: query
+        name: name
+        type: string
+      - description: 角色状态
+        in: query
+        name: state
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: '{"code":200,"data":{},"msg":"ok"}'
+          description: '{"code":200,"data":[list:[{},{}],total:10],"msg":"ok"}'
           schema:
             type: string
       summary: 获取角色列表
