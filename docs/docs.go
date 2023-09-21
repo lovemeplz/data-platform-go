@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/api/v1/sys/roles": {
             "get": {
-                "description": "这是一段接口描述",
+                "description": "这是一段接口描述\nCode 角色编码\nName 角色名称",
                 "produces": [
                     "application/json"
                 ],
@@ -45,14 +45,7 @@ const docTemplate = `{
                         "in": "query"
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "{\"code\":200,\"data\":[list:[{},{}],total:10],\"msg\":\"ok\"}",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
+                "responses": {}
             },
             "post": {
                 "description": "这是一段接口描述",

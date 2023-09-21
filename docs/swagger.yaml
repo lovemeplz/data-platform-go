@@ -3,7 +3,10 @@ info:
 paths:
   /api/v1/sys/roles:
     get:
-      description: 这是一段接口描述
+      description: |-
+        这是一段接口描述
+        Code 角色编码
+        Name 角色名称
       parameters:
       - description: 角色编码
         in: query
@@ -19,11 +22,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: '{"code":200,"data":[list:[{},{}],total:10],"msg":"ok"}'
-          schema:
-            type: string
+      responses: {}
       summary: 获取角色列表
       tags:
       - 系统管理

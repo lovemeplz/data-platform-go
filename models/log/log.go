@@ -8,7 +8,7 @@ type Log struct {
 	models.Model
 	UserCode   string `json:"user_code"`
 	UserName   string `json:"user_name"`
-	Type       string `json:"type"`
+	Level      string `json:"level"`
 	Time       int    `json:"time"`
 	IP         string `json:"ip"`
 	CreatedBy  string `json:"created_by"`

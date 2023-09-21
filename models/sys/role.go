@@ -6,6 +6,10 @@ import (
 	"time"
 )
 
+// Role model info
+// @Description Code 角色编码
+// @Description Name 角色名称
+
 type Role struct {
 	models.Model
 	Code         string `json:"code" validate:"required"`
@@ -33,9 +37,9 @@ func AddRoles(role Role) bool {
 	return true
 }
 
-func EditRoles(id int, data map[string]interface{}) bool {
+func EditRoles(id int, role Role) bool {
 	models.Db.AutoMigrate(&Role{})
-	models.Db.Model(&Role{}).Where("id = ?", id).Updates(data)
+	models.Db.Model(&Role{}).Where("id = ?", id).Updates(&role)
 	return true
 }
 

@@ -18,10 +18,12 @@ import (
 //	@Summary		获取角色列表
 //	@Description	这是一段接口描述
 //	@Produce		json
-//	@Param			code	query	string	false	"角色编码"
-//	@Param			name	query	string	false	"角色名称"
-//	@Param			state	query	int		false	"角色状态"
+//	@Header			200		{string}	Token	"token"
+//	@Param			code	query		string	false	"角色编码"
+//	@Param			name	query		string	false	"角色名称"
+//	@Param			state	query		int		false	"角色状态"
 //	@Router			/api/v1/sys/roles [get]
+
 func GetRoles(c *gin.Context) {
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
@@ -60,11 +62,15 @@ func GetRoles(c *gin.Context) {
 //	@Router			/api/v1/sys/roles [post]
 func AddRoles(c *gin.Context) {
 	var role sys.Role
+	if err := c.BindJSON(&role); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	validate := validator.New()
 	err := validate.Struct(role)
 	code := e.INVALID_PARAMS
-	
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": code,
@@ -80,7 +86,6 @@ func AddRoles(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  e.GetMsg(code),
-		"data": role,
 	})
 }
 
@@ -93,23 +98,34 @@ func AddRoles(c *gin.Context) {
 //	@Success		200	{string}	json	"{"code":200,"data":{},"msg":"ok"}"
 //	@Router			/api/v1/sys/roles/:id [put]
 func EditRoles(c *gin.Context) {
-	code := e.SUCCESS
-	data := make(map[string]interface{})
+	var role sys.Role
+	if err := c.BindJSON(&role); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	ID := c.Param("id")
-	Name := c.Query("name")
-	AssignedPerson := c.Query("assigned_user")
-
-	data["name"] = Name
-	data["assigned_user"] = AssignedPerson
-
 	id, _ := strconv.Atoi(ID)
-	sys.EditRoles(id, data)
 
+	validate := validator.New()
+	err := validate.Struct(role)
+	code := e.INVALID_PARAMS
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": code,
+			"msg":  e.GetMsg(code),
+			"data": err.Error(),
+		})
+		return
+	}
+
+	sys.EditRoles(id, role)
+	code = e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  e.GetMsg(code),
-		"data": make(map[string]string),
+		"data": "",
 	})
 }
 
@@ -131,6 +147,6 @@ func DeleteRoles(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  e.GetMsg(code),
-		"data": make(map[string]string),
+		"data": "",
 	})
 }
