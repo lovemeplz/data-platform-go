@@ -20,9 +20,9 @@
 
 - Web框架       https://github.com/gin-gonic/gin
 - 配置管理       https://github.com/spf13/viper
-- 数据库ORM     https://github.com/go-gorm/gorm
-- 日志管理          https://pkg.go.dev/log/slog
-- 定时任务https //github.com/robfig/cron
+- 数据库ORM      https://github.com/go-gorm/gorm
+- 日志管理       https://pkg.go.dev/log/slog
+- 定时任务       https://github.com/robfig/cron
 
 
 ## 文档
