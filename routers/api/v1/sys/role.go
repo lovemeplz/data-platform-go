@@ -13,17 +13,15 @@ import (
 
 // GetRoles
 //
-//	@Title			测试
-//	@Tags			系统管理
+//	@Tags			角色管理
 //	@Summary		获取角色列表
 //	@Description	这是一段接口描述
 //	@Produce		json
-//	@Header			200		{string}	Token	"token"
 //	@Param			code	query		string	false	"角色编码"
 //	@Param			name	query		string	false	"角色名称"
 //	@Param			state	query		int		false	"角色状态"
+//	@Success		200		{string}	json	"{"code":200,"data":{},"msg":"ok"}"
 //	@Router			/api/v1/sys/roles [get]
-
 func GetRoles(c *gin.Context) {
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
@@ -53,8 +51,7 @@ func GetRoles(c *gin.Context) {
 
 // AddRoles
 //
-//	@Title			测试
-//	@Tags			系统管理
+//	@Tags			角色管理
 //	@Summary		新增角色
 //	@Description	这是一段接口描述
 //	@Produce		json
@@ -91,8 +88,8 @@ func AddRoles(c *gin.Context) {
 
 // EditRoles
 //
-//	@Tags			系统管理
-//	@Summary		编辑角色
+//	@Tags			角色管理
+//	@Summary		更新角色
 //	@Description	这是一段接口描述
 //	@Produce		json
 //	@Success		200	{string}	json	"{"code":200,"data":{},"msg":"ok"}"
@@ -131,7 +128,7 @@ func EditRoles(c *gin.Context) {
 
 // DeleteRoles
 //
-//	@Tags			系统管理
+//	@Tags			角色管理
 //	@Summary		删除角色
 //	@Description	这是一段接口描述
 //	@Produce		json

@@ -1,12 +1,47 @@
 info:
   contact: {}
 paths:
+  /api/v1/sys/dept:
+    post:
+      description: 这是一段接口描述
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 新增部门
+      tags:
+      - 部门管理
+  /api/v1/sys/dept/:id:
+    delete:
+      description: 这是一段接口描述
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 删除部门
+      tags:
+      - 部门管理
+    put:
+      description: 这是一段接口描述
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 更新部门
+      tags:
+      - 部门管理
   /api/v1/sys/roles:
     get:
-      description: |-
-        这是一段接口描述
-        Code 角色编码
-        Name 角色名称
+      description: 这是一段接口描述
       parameters:
       - description: 角色编码
         in: query
@@ -22,10 +57,14 @@ paths:
         type: integer
       produces:
       - application/json
-      responses: {}
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
       summary: 获取角色列表
       tags:
-      - 系统管理
+      - 角色管理
     post:
       description: 这是一段接口描述
       produces:
@@ -37,7 +76,7 @@ paths:
             type: string
       summary: 新增角色
       tags:
-      - 系统管理
+      - 角色管理
   /api/v1/sys/roles/:id:
     delete:
       description: 这是一段接口描述
@@ -50,7 +89,7 @@ paths:
             type: string
       summary: 删除角色
       tags:
-      - 系统管理
+      - 角色管理
     put:
       description: 这是一段接口描述
       produces:
@@ -60,7 +99,7 @@ paths:
           description: '{"code":200,"data":{},"msg":"ok"}'
           schema:
             type: string
-      summary: 编辑角色
+      summary: 更新角色
       tags:
-      - 系统管理
+      - 角色管理
 swagger: "2.0"

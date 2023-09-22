@@ -26,10 +26,17 @@ func InitRouter() *gin.Engine {
 
 	// 系统管理
 	{
+		// 角色管理
 		apiv1.GET("/sys/roles", sys.GetRoles)
 		apiv1.POST("/sys/roles", sys.AddRoles)
 		apiv1.PUT("/sys/roles/:id", sys.EditRoles)
 		apiv1.DELETE("/sys/roles/:id", sys.DeleteRoles)
+
+		// 部门管理
+		apiv1.GET("/sys/dept", sys.GetDept)
+		apiv1.POST("/sys/dept", sys.AddDept)
+		apiv1.PUT("/sys/dept/:id", sys.UpdateDept)
+		apiv1.DELETE("/sys/dept/:id", sys.DeleteDept)
 	}
 
 	// 错误日志

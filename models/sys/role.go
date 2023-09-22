@@ -6,10 +6,6 @@ import (
 	"time"
 )
 
-// Role model info
-// @Description Code 角色编码
-// @Description Name 角色名称
-
 type Role struct {
 	models.Model
 	Code         string `json:"code" validate:"required"`
@@ -21,8 +17,14 @@ type Role struct {
 	ModifiedBy   string `json:"modified_by"`
 }
 
+// TableName 会将表名重写
+func (Role) TableName() string {
+	return "dpg_sys_role"
+}
+
 func GetRoles(pageNum int, pageSize int, maps interface{}) (roles []Role) {
-	models.Db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&roles)
+	models.Db.AutoMigrate(&Role{})
+	models.Db.Table("dpg_sys_role").Where(maps).Offset(pageNum).Limit(pageSize).Find(&roles)
 	return
 }
 

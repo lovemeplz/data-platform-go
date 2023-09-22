@@ -15,14 +15,72 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/sys/roles": {
-            "get": {
-                "description": "这是一段接口描述\nCode 角色编码\nName 角色名称",
+        "/api/v1/sys/dept": {
+            "post": {
+                "description": "这是一段接口描述",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "系统管理"
+                    "部门管理"
+                ],
+                "summary": "新增部门",
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/sys/dept/:id": {
+            "put": {
+                "description": "这是一段接口描述",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "更新部门",
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "这是一段接口描述",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "删除部门",
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/sys/roles": {
+            "get": {
+                "description": "这是一段接口描述",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "角色管理"
                 ],
                 "summary": "获取角色列表",
                 "parameters": [
@@ -45,7 +103,14 @@ const docTemplate = `{
                         "in": "query"
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             },
             "post": {
                 "description": "这是一段接口描述",
@@ -53,7 +118,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "系统管理"
+                    "角色管理"
                 ],
                 "summary": "新增角色",
                 "responses": {
@@ -73,9 +138,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "系统管理"
+                    "角色管理"
                 ],
-                "summary": "编辑角色",
+                "summary": "更新角色",
                 "responses": {
                     "200": {
                         "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
@@ -91,7 +156,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "系统管理"
+                    "角色管理"
                 ],
                 "summary": "删除角色",
                 "responses": {
