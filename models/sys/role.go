@@ -22,30 +22,30 @@ func (Role) TableName() string {
 	return "dpg_sys_role"
 }
 
-func GetRoles(pageNum int, pageSize int, maps interface{}) (roles []Role) {
+func GetRole(pageNum int, pageSize int, maps interface{}) (roles []Role) {
 	models.Db.AutoMigrate(&Role{})
 	models.Db.Table("dpg_sys_role").Where(maps).Offset(pageNum).Limit(pageSize).Find(&roles)
 	return
 }
 
-func GetRolesTotal(maps interface{}) (count int) {
+func GetRoleTotal(maps interface{}) (count int) {
 	models.Db.Model(&Role{}).Where(maps).Count(&count)
 	return
 }
 
-func AddRoles(role Role) bool {
+func AddRole(role Role) bool {
 	models.Db.AutoMigrate(&Role{})
 	models.Db.Create(&role)
 	return true
 }
 
-func EditRoles(id int, role Role) bool {
+func UpdateRole(id int, role Role) bool {
 	models.Db.AutoMigrate(&Role{})
 	models.Db.Model(&Role{}).Where("id = ?", id).Updates(&role)
 	return true
 }
 
-func DeleteRoles(id int) bool {
+func DeleteRole(id int) bool {
 	models.Db.AutoMigrate(&Role{})
 	models.Db.Where("id = ?", id).Delete(&Role{})
 	return true

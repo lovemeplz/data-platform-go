@@ -11,7 +11,7 @@ import (
 	"strconv"
 )
 
-// GetRoles
+// GetRole
 //
 //	@Tags			角色管理
 //	@Summary		获取角色列表
@@ -21,8 +21,8 @@ import (
 //	@Param			name	query		string	false	"角色名称"
 //	@Param			state	query		int		false	"角色状态"
 //	@Success		200		{string}	json	"{"code":200,"data":{},"msg":"ok"}"
-//	@Router			/api/v1/sys/roles [get]
-func GetRoles(c *gin.Context) {
+//	@Router			/api/v1/sys/role [get]
+func GetRole(c *gin.Context) {
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
 
@@ -36,8 +36,8 @@ func GetRoles(c *gin.Context) {
 		maps["state"] = c.Query("state")
 	}
 
-	data["list"] = sys.GetRoles(util.GetPage(c), setting.PageSize, maps)
-	data["total"] = sys.GetRolesTotal(maps)
+	data["list"] = sys.GetRole(util.GetPage(c), setting.PageSize, maps)
+	data["total"] = sys.GetRoleTotal(maps)
 
 	code := e.SUCCESS
 
@@ -49,15 +49,15 @@ func GetRoles(c *gin.Context) {
 	})
 }
 
-// AddRoles
+// AddRole
 //
 //	@Tags			角色管理
 //	@Summary		新增角色
 //	@Description	这是一段接口描述
 //	@Produce		json
 //	@Success		200	{string}	json	"{"code":200,"data":{},"msg":"ok"}"
-//	@Router			/api/v1/sys/roles [post]
-func AddRoles(c *gin.Context) {
+//	@Router			/api/v1/sys/role [post]
+func AddRole(c *gin.Context) {
 	var role sys.Role
 	if err := c.BindJSON(&role); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -77,7 +77,7 @@ func AddRoles(c *gin.Context) {
 		return
 	}
 
-	sys.AddRoles(role)
+	sys.AddRole(role)
 	code = e.SUCCESS
 
 	c.JSON(http.StatusOK, gin.H{
@@ -86,15 +86,15 @@ func AddRoles(c *gin.Context) {
 	})
 }
 
-// EditRoles
+// UpdateRole
 //
 //	@Tags			角色管理
 //	@Summary		更新角色
 //	@Description	这是一段接口描述
 //	@Produce		json
 //	@Success		200	{string}	json	"{"code":200,"data":{},"msg":"ok"}"
-//	@Router			/api/v1/sys/roles/:id [put]
-func EditRoles(c *gin.Context) {
+//	@Router			/api/v1/sys/role/:id [put]
+func UpdateRole(c *gin.Context) {
 	var role sys.Role
 	if err := c.BindJSON(&role); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -117,7 +117,7 @@ func EditRoles(c *gin.Context) {
 		return
 	}
 
-	sys.EditRoles(id, role)
+	sys.UpdateRole(id, role)
 	code = e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
@@ -126,20 +126,20 @@ func EditRoles(c *gin.Context) {
 	})
 }
 
-// DeleteRoles
+// DeleteRole
 //
 //	@Tags			角色管理
 //	@Summary		删除角色
 //	@Description	这是一段接口描述
 //	@Produce		json
 //	@Success		200	{string}	json	"{"code":200,"data":{},"msg":"ok"}"
-//	@Router			/api/v1/sys/roles/:id [delete]
-func DeleteRoles(c *gin.Context) {
+//	@Router			/api/v1/sys/role/:id [delete]
+func DeleteRole(c *gin.Context) {
 	code := e.SUCCESS
 	ID := c.Param("id")
 	id, _ := strconv.Atoi(ID)
 
-	sys.DeleteRoles(id)
+	sys.DeleteRole(id)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
