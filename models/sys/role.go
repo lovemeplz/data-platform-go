@@ -3,18 +3,24 @@ package sys
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/lovemeplz/data-platform-go/models"
+	"strings"
 	"time"
 )
 
 type Role struct {
 	models.Model
-	Code         string `json:"code" validate:"required"`
-	Name         string `json:"name" validate:"required"`
-	AssignedUser string `json:"assigned_user"`
-	State        *int   `json:"state" validate:"required"`
-	Remark       string `json:"remark"`
-	CreatedBy    string `json:"created_by"`
-	ModifiedBy   string `json:"modified_by"`
+	RoleCode      string `json:"roleCode" validate:"required"`
+	RoleName      string `json:"roleName" validate:"required"`
+	AssignedUsers string `json:"assignedUsers"`
+	DataStatus    *int   `json:"dataStatus" validate:"required"`
+	Remark        string `json:"remark"`
+	CreatedBy     string `json:"createdBy"`
+	ModifiedBy    string `json:"modifiedBy"`
+}
+
+type RoleReq struct {
+	models.Model
+	ID int `gorm:"primary_key" json:"id"`
 }
 
 // TableName 会将表名重写
@@ -45,9 +51,13 @@ func UpdateRole(id int, role Role) bool {
 	return true
 }
 
-func DeleteRole(id int) bool {
+func DeleteRole(id string) bool {
 	models.Db.AutoMigrate(&Role{})
-	models.Db.Where("id = ?", id).Delete(&Role{})
+	roles := strings.Split(id, ",")
+	models.Db.Delete(&Role{}, roles)
+
+	//var roles = []Role{{ID: 15}, {ID: 14}}
+	//models.Db.Delete(&roles)
 	return true
 }
 

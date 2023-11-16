@@ -1,38 +1,40 @@
 package auth
 
 import (
-	"fmt"
+	"github.com/lovemeplz/data-platform-go/models/auth"
 	"github.com/lovemeplz/data-platform-go/pkg/logging"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
-	"github.com/lovemeplz/data-platform-go/models/auth"
 	"github.com/lovemeplz/data-platform-go/pkg/e"
 	"github.com/lovemeplz/data-platform-go/utils"
 )
 
-type authUp struct {
+type Account struct {
 	Username string `valid:"Required; MaxSize(50)"`
 	Password string `valid:"Required; MaxSize(50)"`
 }
 
 func Login(c *gin.Context) {
-	username := c.Query("username")
-	password := c.Query("password")
 
+	var account Account
+	if err := c.BindJSON(&account); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	valid := validation.Validation{}
-	a := authUp{Username: username, Password: password}
+	a := Account{Username: account.Username, Password: account.Password}
 	ok, _ := valid.Valid(&a)
+
 	data := make(map[string]interface{})
-	code := e.INVALID_PARAMS
-	fmt.Println("a:::::", a)
+	code := e.InvalidParams
 	if ok {
-		isExist := auth.CheckAuth(username, password)
+		isExist := auth.CheckAuth(account.Username, account.Password)
 		if isExist {
-			token, err := utils.GenerateToken(username, password)
+			token, err := utils.GenerateToken(account.Username, account.Password)
 			if err != nil {
-				code = e.ERROR_AUTH_TOKEN
+				code = e.ErrorAuthToken
 			} else {
 				data["token"] = token
 
@@ -40,7 +42,7 @@ func Login(c *gin.Context) {
 			}
 
 		} else {
-			code = e.ERROR_AUTH
+			code = e.ErrorAuth
 		}
 	} else {
 		for _, err := range valid.Errors {

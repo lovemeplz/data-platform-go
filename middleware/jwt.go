@@ -15,15 +15,15 @@ func JWT() gin.HandlerFunc {
 		var data interface{}
 
 		code = e.SUCCESS
-		token := c.Query("token")
+		token := c.Request.Header.Get("x-token")
 		if token == "" {
-			code = e.INVALID_PARAMS
+			code = e.Unauthorized
 		} else {
 			claims, err := utils.ParseToken(token)
 			if err != nil {
-				code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
+				code = e.ErrorAuthCheckTokenFail
 			} else if time.Now().Unix() > claims.ExpiresAt {
-				code = e.ERROR_AUTH_CHECK_TOKEN_TIMEOUT
+				code = e.ErrorAuthCheckTokenTimeout
 			}
 		}
 

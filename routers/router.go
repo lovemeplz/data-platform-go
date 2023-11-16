@@ -15,12 +15,17 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	apiv1 := r.Group("api/v1")
-	// apiv1.Use(jwt.JWT())
 
-	// 用户、登入登出相关
+	// 白名单
 	{
 		apiv1.POST("auth/login", auth.Login)
 		apiv1.POST("auth/logout", auth.LogOut)
+
+	}
+
+	// apiv1.Use(jwt.JWT())
+	// 用户相关
+	{
 		apiv1.GET("auth/userInfo", auth.GetUserInfo)
 	}
 
@@ -37,6 +42,12 @@ func InitRouter() *gin.Engine {
 		apiv1.POST("/sys/dept", sys.AddDept)
 		apiv1.PUT("/sys/dept/:id", sys.UpdateDept)
 		apiv1.DELETE("/sys/dept/:id", sys.DeleteDept)
+
+		// 用户管理
+		apiv1.GET("/sys/user", sys.GetUser)
+		apiv1.POST("/sys/user", sys.AddUser)
+		apiv1.PUT("/sys/user/:id", sys.UpdateUser)
+		apiv1.DELETE("/sys/user/:id", sys.DeleteUser)
 	}
 
 	// 错误日志

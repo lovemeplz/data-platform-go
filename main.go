@@ -12,7 +12,8 @@ func main() {
 	router := routers.InitRouter()
 
 	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		//Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		Addr:           "127.0.0.1:9000",
 		Handler:        router,
 		ReadTimeout:    setting.ReadTimeout,
 		WriteTimeout:   setting.WriteTimeout,

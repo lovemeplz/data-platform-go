@@ -9,14 +9,13 @@ import (
 	"strconv"
 )
 
-// GetRoles
+// GetDept
 //
 //	@Tags			部门管理
 //	@Summary		获取部门
 //	@Description	这是一段接口描述
 //	@Produce		json
 //	@Router			/api/v1/sys/roles [get]
-
 func GetDept(c *gin.Context) {
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
@@ -50,7 +49,7 @@ func AddDept(c *gin.Context) {
 
 	validate := validator.New()
 	err := validate.Struct(dept)
-	code := e.INVALID_PARAMS
+	code := e.InvalidParams
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -90,7 +89,7 @@ func UpdateDept(c *gin.Context) {
 
 	validate := validator.New()
 	err := validate.Struct(dept)
-	code := e.INVALID_PARAMS
+	code := e.InvalidParams
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

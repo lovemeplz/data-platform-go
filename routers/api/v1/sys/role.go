@@ -26,14 +26,14 @@ func GetRole(c *gin.Context) {
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
 
-	if c.Query("code") != "" {
-		maps["code"] = c.Query("code")
+	if c.Query("roleCode") != "" {
+		maps["role_code"] = c.Query("roleCode")
 	}
-	if c.Query("name") != "" {
-		maps["name"] = c.Query("name")
+	if c.Query("roleName") != "" {
+		maps["role_name"] = c.Query("roleName")
 	}
-	if c.Query("state") != "" {
-		maps["state"] = c.Query("state")
+	if c.Query("dataStatus") != "" {
+		maps["data_status"] = c.Query("dataStatus")
 	}
 
 	data["list"] = sys.GetRole(util.GetPage(c), setting.PageSize, maps)
@@ -66,7 +66,7 @@ func AddRole(c *gin.Context) {
 
 	validate := validator.New()
 	err := validate.Struct(role)
-	code := e.INVALID_PARAMS
+	code := e.InvalidParams
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -106,7 +106,7 @@ func UpdateRole(c *gin.Context) {
 
 	validate := validator.New()
 	err := validate.Struct(role)
-	code := e.INVALID_PARAMS
+	code := e.InvalidParams
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -136,11 +136,9 @@ func UpdateRole(c *gin.Context) {
 //	@Router			/api/v1/sys/role/:id [delete]
 func DeleteRole(c *gin.Context) {
 	code := e.SUCCESS
-	ID := c.Param("id")
-	id, _ := strconv.Atoi(ID)
-
+	id := c.Param("id")
+	// id, _ := strconv.Atoi(ID)
 	sys.DeleteRole(id)
-
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  e.GetMsg(code),

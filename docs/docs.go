@@ -73,7 +73,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/sys/roles": {
+        "/api/v1/sys/role": {
             "get": {
                 "description": "这是一段接口描述",
                 "produces": [
@@ -131,7 +131,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/sys/roles/:id": {
+        "/api/v1/sys/role/:id": {
             "put": {
                 "description": "这是一段接口描述",
                 "produces": [
@@ -167,6 +167,19 @@ const docTemplate = `{
                         }
                     }
                 }
+            }
+        },
+        "/api/v1/sys/roles": {
+            "get": {
+                "description": "这是一段接口描述",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "获取部门",
+                "responses": {}
             }
         }
     }
