@@ -38,8 +38,8 @@ jobs:
           user: ${{ secrets.SSH_USERNAME }}
           pass: ${{ secrets.USER_PASS }}
           connect_timeout: 10s
-          local: 'data-platform-go'
-          remote: /usr/share/nginx/servies/data-platform-react/
+          local: './dist/*'
+          remote: /usr/share/nginx/html/data-platform-react/
 
           - name: Restart server   # 第五步，重启服务
             uses: appleboy/ssh-action@master
