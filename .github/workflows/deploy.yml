@@ -35,7 +35,7 @@ jobs:
           pass: ${{ secrets.USER_PASS }}
           connect_timeout: 10s
           local: 'data-platform-go'
-          remote: /usr/share/nginx/servies/data-platform-react/
+          remote: /usr/share/nginx/servies/data-platform-go/
 
       - name: Restart server   # 第五步，重启服务
         uses: appleboy/ssh-action@master
@@ -45,5 +45,6 @@ jobs:
           password: ${{ secrets.USER_PASS }}
           # 重启的脚本，根据自身情况做相应改动，一般要做的是migrate数据库以及重启服务器
           script: |
-            nginx -s reload
+            cd /usr/share/nginx/servies/data-platform-go/
+            ./data-platform-go
     
