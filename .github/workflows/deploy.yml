@@ -14,20 +14,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.19'
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.19'
 
-    - name: Install dependencies
-      run: go mod tidy
+      - name: Install dependencies
+        run: go mod tidy
 
-    - name: Build
-      run: go build
-    - name: Deploy
-        # 因为构建之后，需要把代码上传到服务器上，所以需要连接到ssh，并且做一个拷贝操作
+      - name: Build
+        run: go build
+
+      - name: Set up Go
         uses: cross-the-world/scp-pipeline@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -37,12 +37,13 @@ jobs:
           local: 'data-platform-go'
           remote: /usr/share/nginx/servies/data-platform-react/
 
-          - name: Restart server   # 第五步，重启服务
-            uses: appleboy/ssh-action@master
-            with:
-              host: ${{ secrets.SSH_HOST }}  # 下面三个配置与上一步类似
-              username: ${{ secrets.SSH_USERNAME }}
-              password: ${{ secrets.USER_PASS }}
-              # 重启的脚本，根据自身情况做相应改动，一般要做的是migrate数据库以及重启服务器
-              script: |
-                nginx -s reload
+      - name: Restart server   # 第五步，重启服务
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}  # 下面三个配置与上一步类似
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.USER_PASS }}
+          # 重启的脚本，根据自身情况做相应改动，一般要做的是migrate数据库以及重启服务器
+          script: |
+            nginx -s reload
+    
