@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lovemeplz/data-platform-go/docs"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/auth"
+	"github.com/lovemeplz/data-platform-go/routers/api/v1/log"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/sys"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -48,6 +49,11 @@ func InitRouter() *gin.Engine {
 		apiv1.POST("/sys/user", sys.AddUser)
 		apiv1.PUT("/sys/user/:id", sys.UpdateUser)
 		apiv1.DELETE("/sys/user/:id", sys.DeleteUser)
+	}
+
+	// 业务日志
+	{
+		apiv1.GET("/log/bizlog", log.GetBizLog)
 	}
 
 	// 错误日志
