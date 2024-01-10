@@ -1,17 +1,25 @@
 package main
 
 import (
+	"fmt"
+	"github.com/lovemeplz/data-platform-go/models"
+	"github.com/lovemeplz/data-platform-go/pkg/logging"
 	"github.com/lovemeplz/data-platform-go/pkg/setting"
 	"github.com/lovemeplz/data-platform-go/routers"
 	"net/http"
 )
 
+func init() {
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
+}
+
 func main() {
 	router := routers.InitRouter()
-	setting.Setup()
 
 	s := &http.Server{
-		Addr:           "127.0.0.1:9000", // TODO 改为从配置文件读取
+		Addr:           fmt.Sprintf("%s:%v", setting.ServerSetting.HttpHost, setting.ServerSetting.HttpPort),
 		Handler:        router,
 		ReadTimeout:    setting.ServerSetting.ReadTimeout,
 		WriteTimeout:   setting.ServerSetting.WriteTimeout,

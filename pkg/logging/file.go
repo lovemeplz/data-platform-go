@@ -2,16 +2,17 @@ package logging
 
 import (
 	"fmt"
+	"github.com/lovemeplz/data-platform-go/pkg/setting"
 	"log"
 	"os"
 	"time"
 )
 
 var (
-	LogSavePath = "runtime/logs/"
-	LogSaveName = "log"
-	LogFileExt  = "log"
-	TimeFormat  = "20060102"
+	LogSavePath = setting.AppSetting.TimeFormat
+	LogSaveName = setting.AppSetting.LogSaveName
+	LogFileExt  = setting.AppSetting.LogFileExt
+	TimeFormat  = setting.AppSetting.TimeFormat
 )
 
 func getLogFilePath() string {

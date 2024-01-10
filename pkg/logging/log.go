@@ -29,7 +29,7 @@ const (
 	FATAL
 )
 
-func init() {
+func Setup() {
 	filePath := getLogFileFullPath()
 	F = openLogFile(filePath)
 
@@ -58,7 +58,7 @@ func Error(v ...interface{}) {
 
 func Fatal(v ...interface{}) {
 	setPrefix(FATAL)
-	logger.Fatalln(v)
+	logger.Println(v)
 }
 
 func setPrefix(level Level) {

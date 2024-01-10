@@ -1,0 +1,32 @@
+# app
+RunMode : debug
+PageSize : 10
+JwtSecret : 23347$040412
+
+ImagePrefixUrl: http://127.0.0.1:8000
+ImageSavePath: upload/images/
+ImageMaxSize: 5
+ImageAllowExts: .jpg,.jpeg,.png
+
+LogSavePath: runtime/logs/
+LogSaveName: log
+LogFileExt: log
+TimeFormat: 20060102
+
+RuntimeRootPath: runtime/
+ExportSavePath : runtime/export/
+
+# server
+HttpHost: 127.0.0.1
+HttpPort: 9000
+ReadTimeout: 60
+WriteTimeout: 60
+
+# database
+Type: mysql
+User: root
+Password: szq88712393
+Host: 127.0.0.1:3306
+Name: data_platform_go
+TablePrefix: dpg_
+

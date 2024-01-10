@@ -3,6 +3,7 @@ package setting
 import (
 	"fmt"
 	"github.com/spf13/viper"
+	"log"
 	"time"
 )
 
@@ -26,6 +27,7 @@ type App struct {
 
 type Server struct {
 	RunMode      string
+	HttpHost     string
 	HttpPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
@@ -49,7 +51,8 @@ var (
 
 func Setup() {
 	Cfg.AddConfigPath("./conf") // 路径(当前路径下的conf文件夹)
-	Cfg.SetConfigName("app")    // 名称
+	Cfg.SetConfigType("yaml")
+	Cfg.SetConfigName("app") // 名称
 
 	err := Cfg.ReadInConfig() // 读配置
 	if err != nil {
@@ -60,6 +63,19 @@ func Setup() {
 		}
 	}
 
-	err = Cfg.Unmarshal("app")
-	fmt.Println("setting:::", Cfg.AllSettings())
+	err = Cfg.Unmarshal(AppSetting)
+	if err != nil {
+		log.Fatal("AppSetting转换Json失败")
+	}
+	fmt.Println("test:::", AppSetting, AppSetting.PageSize)
+
+	err = viper.Unmarshal(ServerSetting)
+	if err != nil {
+		log.Fatal("ServerSetting转换Json失败")
+	}
+
+	err = Cfg.Unmarshal(DatabaseSetting)
+	if err != nil {
+		log.Fatal("DatabaseSetting转换Json失败")
+	}
 }

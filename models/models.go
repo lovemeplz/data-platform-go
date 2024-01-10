@@ -17,20 +17,17 @@ type Model struct {
 	ModifiedOn int `json:"modifiedOn"`
 }
 
-func init() {
-	var (
-		err                                               error
-		dbType, dbName, user, password, host, tablePrefix string
-	)
+func Setup() {
+	DatabaseSetting := setting.DatabaseSetting
 
-	dbType = setting.Cfg.GetString("database.TYPE")
-	dbName = setting.Cfg.GetString("database.NAME")
-	user = setting.Cfg.GetString("database.USER")
-	password = setting.Cfg.GetString("database.PASSWORD")
-	host = setting.Cfg.GetString("database.HOST")
-	tablePrefix = setting.Cfg.GetString("database.TABLE_PREFIX")
+	dbType := DatabaseSetting.Type
+	dbName := DatabaseSetting.Name
+	user := DatabaseSetting.User
+	password := DatabaseSetting.Password
+	host := DatabaseSetting.Host
+	tablePrefix := DatabaseSetting.TablePrefix
 
-	Db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	Db, err := gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		user,
 		password,
 		host,
