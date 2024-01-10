@@ -10,9 +10,13 @@ type Auth struct {
 	Password string `json:"password"`
 }
 
+func (Auth) TableName() string {
+	return "dpg_sys_user"
+}
+
 func CheckAuth(username, password string) bool {
 	var auth Auth
-	models.Db.Select("id").Where(Auth{Username: username, Password: password}).First(&auth)
+	models.Db.Select("id").Where("user_name = ? AND password = ?", username, password).First(&auth)
 	if auth.ID > 0 {
 		return true
 	}

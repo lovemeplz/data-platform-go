@@ -35,3 +35,7 @@ func GetBizLog(c *gin.Context) {
 		"data":    data,
 	})
 }
+
+func ExportBizLog(c *gin.Context) {
+	util.GenerateExcel()
+}

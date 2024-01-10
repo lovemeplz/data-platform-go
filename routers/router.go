@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lovemeplz/data-platform-go/docs"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/auth"
+	"github.com/lovemeplz/data-platform-go/routers/api/v1/example"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/log"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/sys"
 	swaggerFiles "github.com/swaggo/files"
@@ -54,6 +55,7 @@ func InitRouter() *gin.Engine {
 	// 业务日志
 	{
 		apiv1.GET("/log/bizlog", log.GetBizLog)
+		apiv1.GET("/log/bizlog/export", log.ExportBizLog)
 	}
 
 	// 错误日志
@@ -61,6 +63,12 @@ func InitRouter() *gin.Engine {
 		//apiv1.GET("/log/errorlog", log.getErrorLogs)
 		//apiv1.POST("/sys/errorlog", log.exportErrorLogs)
 		//apiv1.DELETE("/sys/errorlog/:id", log.DeleteErrorLogs)
+	}
+
+	// 示例
+	{
+		apiv1.POST("/example/upload", example.Upload)
+		apiv1.GET("/example/qrcode", example.Qrcode)
 	}
 
 	return r

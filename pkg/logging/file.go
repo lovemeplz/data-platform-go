@@ -46,6 +46,6 @@ func mkDir() {
 	dir, _ := os.Getwd()
 	err := os.MkdirAll(dir+"/"+getLogFilePath(), os.ModePerm)
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 }

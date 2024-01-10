@@ -8,12 +8,15 @@ import (
 
 var (
 	RunMode      string
+	HTTPHost     int
 	HTTPPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 
 	PageSize  int
 	JwtSecret string
+
+	ExportSavePath string
 )
 
 var Cfg = viper.New()
@@ -32,6 +35,7 @@ func init() {
 	}
 
 	LoadBase()
+	LoadCommon()
 	LoadServer()
 	LoadApp()
 
@@ -42,6 +46,7 @@ func LoadBase() {
 }
 
 func LoadServer() {
+	HTTPHost = Cfg.GetInt("server.HTTP_HOST")
 	HTTPPort = Cfg.GetInt("server.HTTP_PORT")
 	ReadTimeout = time.Duration(Cfg.GetInt("server.READ_TIMEOUT")) * time.Second
 	WriteTimeout = time.Duration(Cfg.GetInt("server.WRITE_TIMEOUT")) * time.Second
@@ -50,4 +55,8 @@ func LoadServer() {
 func LoadApp() {
 	PageSize = Cfg.GetInt("app.PAGE_SIZE")
 	JwtSecret = Cfg.GetString("app.JwtSecret")
+}
+
+func LoadCommon() {
+	ExportSavePath = Cfg.GetString("common.ExportSavePath")
 }
