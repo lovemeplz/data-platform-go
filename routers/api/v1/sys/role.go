@@ -36,7 +36,7 @@ func GetRole(c *gin.Context) {
 		maps["data_status"] = c.Query("dataStatus")
 	}
 
-	data["list"] = sys.GetRole(util.GetPage(c), setting.PageSize, maps)
+	data["list"] = sys.GetRole(util.GetPage(c), setting.AppSetting.PageSize, maps)
 	data["total"] = sys.GetRoleTotal(maps)
 
 	code := e.SUCCESS

@@ -6,22 +6,48 @@ import (
 	"time"
 )
 
-var (
-	RunMode      string
-	HTTPHost     int
-	HTTPPort     int
-	ReadTimeout  time.Duration
-	WriteTimeout time.Duration
+type App struct {
+	JwtSecret       string
+	PageSize        int
+	RuntimeRootPath string
 
-	PageSize  int
-	JwtSecret string
+	ImagePrefixUrl string
+	ImageSavePath  string
+	ImageMaxSize   int
+	ImageAllowExts []string
+
+	LogSavePath string
+	LogSaveName string
+	LogFileExt  string
+	TimeFormat  string
 
 	ExportSavePath string
+}
+
+type Server struct {
+	RunMode      string
+	HttpPort     int
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
+}
+
+type Database struct {
+	Type        string
+	User        string
+	Password    string
+	Host        string
+	Name        string
+	TablePrefix string
+}
+
+var (
+	AppSetting      = &App{}
+	ServerSetting   = &Server{}
+	DatabaseSetting = &Database{}
+	Cfg             = viper.New()
 )
 
-var Cfg = viper.New()
-
-func init() {
+func Setup() {
 	Cfg.AddConfigPath("./conf") // 路径(当前路径下的conf文件夹)
 	Cfg.SetConfigName("app")    // 名称
 
@@ -34,29 +60,6 @@ func init() {
 		}
 	}
 
-	LoadBase()
-	LoadCommon()
-	LoadServer()
-	LoadApp()
-
-}
-
-func LoadBase() {
-	viper.SetDefault("HTTPPort", 9000)
-}
-
-func LoadServer() {
-	HTTPHost = Cfg.GetInt("server.HTTP_HOST")
-	HTTPPort = Cfg.GetInt("server.HTTP_PORT")
-	ReadTimeout = time.Duration(Cfg.GetInt("server.READ_TIMEOUT")) * time.Second
-	WriteTimeout = time.Duration(Cfg.GetInt("server.WRITE_TIMEOUT")) * time.Second
-}
-
-func LoadApp() {
-	PageSize = Cfg.GetInt("app.PAGE_SIZE")
-	JwtSecret = Cfg.GetString("app.JwtSecret")
-}
-
-func LoadCommon() {
-	ExportSavePath = Cfg.GetString("common.ExportSavePath")
+	err = Cfg.Unmarshal("app")
+	fmt.Println("setting:::", Cfg.AllSettings())
 }

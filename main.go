@@ -8,12 +8,13 @@ import (
 
 func main() {
 	router := routers.InitRouter()
+	setting.Setup()
 
 	s := &http.Server{
 		Addr:           "127.0.0.1:9000", // TODO 改为从配置文件读取
 		Handler:        router,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
+		ReadTimeout:    setting.ServerSetting.ReadTimeout,
+		WriteTimeout:   setting.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 	s.ListenAndServe()

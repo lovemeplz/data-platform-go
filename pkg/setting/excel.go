@@ -5,5 +5,5 @@ func GetExcelFullUrl(name string) string {
 }
 
 func GetExcelPath() string {
-	return ExportSavePath
+	return AppSetting.ExportSavePath
 }

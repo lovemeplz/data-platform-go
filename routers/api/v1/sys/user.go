@@ -34,7 +34,7 @@ func GetUser(c *gin.Context) {
 		maps["state"] = c.Query("state")
 	}
 
-	data["list"] = sys.GetUser(util.GetPage(c), setting.PageSize, maps)
+	data["list"] = sys.GetUser(util.GetPage(c), setting.AppSetting.PageSize, maps)
 	data["total"] = sys.GetUserTotal(maps)
 
 	code := e.SUCCESS

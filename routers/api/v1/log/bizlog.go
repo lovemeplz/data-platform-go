@@ -23,7 +23,7 @@ func GetBizLog(c *gin.Context) {
 		maps["ip"] = c.Query("ip")
 	}
 
-	data["list"] = log.GetBizLog(util.GetPage(c), setting.PageSize, maps)
+	data["list"] = log.GetBizLog(util.GetPage(c), setting.AppSetting.PageSize, maps)
 	data["total"] = log.GetBizLogTotal(maps)
 
 	code := e.SUCCESS
