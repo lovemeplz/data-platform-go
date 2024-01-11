@@ -12,10 +12,11 @@ type App struct {
 	PageSize        int
 	RuntimeRootPath string
 
-	ImagePrefixUrl string
-	ImageSavePath  string
-	ImageMaxSize   int
-	ImageAllowExts []string
+	ImagePrefixUrl   string
+	ImageSavePath    string
+	ImagePreviewPath string
+	ImageMaxSize     int
+	ImageAllowExts   []string
 
 	LogSavePath string
 	LogSaveName string
@@ -28,7 +29,7 @@ type App struct {
 type Server struct {
 	RunMode      string
 	HttpHost     string
-	HttpPort     int
+	HttpPort     string
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 }
@@ -67,12 +68,14 @@ func Setup() {
 	if err != nil {
 		log.Fatal("AppSetting转换Json失败")
 	}
-	fmt.Println("test:::", AppSetting, AppSetting.PageSize)
+	AppSetting.ImageMaxSize = AppSetting.ImageMaxSize * 1024 * 1024
 
-	err = viper.Unmarshal(ServerSetting)
+	err = Cfg.Unmarshal(ServerSetting)
 	if err != nil {
 		log.Fatal("ServerSetting转换Json失败")
 	}
+	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
+	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second
 
 	err = Cfg.Unmarshal(DatabaseSetting)
 	if err != nil {

@@ -1,5 +1,0 @@
-package github.com/lovemeplz/data-platform-go
-	imports github.com/lovemeplz/data-platform-go/models
-	imports github.com/lovemeplz/data-platform-go/pkg/setting
-	imports github.com/lovemeplz/data-platform-go/pkg/logging
-	imports github.com/lovemeplz/data-platform-go/pkg/setting: import cycle not allowed

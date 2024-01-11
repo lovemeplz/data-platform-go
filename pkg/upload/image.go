@@ -14,8 +14,8 @@ import (
 	"github.com/lovemeplz/data-platform-go/pkg/setting"
 )
 
-func GetImageFullUrl(name string) string {
-	return setting.AppSetting.ImagePrefixUrl + "/" + GetImagePath() + name
+func GetImagePreviewUrl(name string) string {
+	return setting.AppSetting.ImagePrefixUrl + GetImagePreviewPath() + name
 }
 
 func GetImageName(name string) string {
@@ -26,12 +26,16 @@ func GetImageName(name string) string {
 	return fileName + ext
 }
 
-func GetImagePath() string {
+func GetImageSavePath() string {
 	return setting.AppSetting.ImageSavePath
 }
 
+func GetImagePreviewPath() string {
+	return setting.AppSetting.ImagePreviewPath
+}
+
 func GetImageFullPath() string {
-	return setting.AppSetting.RuntimeRootPath + GetImagePath()
+	return setting.AppSetting.RuntimeRootPath + GetImageSavePath()
 }
 
 func CheckImageExt(fileName string) bool {

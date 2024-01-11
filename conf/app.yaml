@@ -3,8 +3,9 @@ RunMode : debug
 PageSize : 10
 JwtSecret : 23347$040412
 
-ImagePrefixUrl: http://127.0.0.1:8000
+ImagePrefixUrl: http://127.0.0.1:9000/
 ImageSavePath: upload/images/
+ImagePreviewPath: static/
 ImageMaxSize: 5
 ImageAllowExts: .jpg,.jpeg,.png
 

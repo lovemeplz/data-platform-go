@@ -3,20 +3,32 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lovemeplz/data-platform-go/docs"
+	"github.com/lovemeplz/data-platform-go/pkg/upload"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/auth"
-	"github.com/lovemeplz/data-platform-go/routers/api/v1/example"
+	"github.com/lovemeplz/data-platform-go/routers/api/v1/common"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/log"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/sys"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 )
 
 func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.StaticFS(upload.GetImagePreviewPath(), http.Dir(upload.GetImageFullPath()))
+
 	apiv1 := r.Group("api/v1")
+
+	// 通用接口 上传、二维码等
+
+	{
+		apiv1.POST("/upload", common.Upload)
+		apiv1.POST("/uploadMultiple", common.UploadMultiple)
+	}
 
 	// 白名单
 	{
@@ -35,9 +47,9 @@ func InitRouter() *gin.Engine {
 	{
 		// 角色管理
 		apiv1.GET("/sys/role", sys.GetRole)
-		apiv1.POST("/sys/role", sys.AddRole)
-		apiv1.PUT("/sys/role/:id", sys.UpdateRole)
-		apiv1.DELETE("/sys/role/:id", sys.DeleteRole)
+		//apiv1.POST("/sys/role", sys.AddRole)
+		//apiv1.PUT("/sys/role/:id", sys.UpdateRole)
+		//apiv1.DELETE("/sys/role/:id", sys.DeleteRole)
 
 		// 部门管理
 		apiv1.GET("/sys/dept", sys.GetDept)
@@ -63,12 +75,6 @@ func InitRouter() *gin.Engine {
 		//apiv1.GET("/log/errorlog", log.getErrorLogs)
 		//apiv1.POST("/sys/errorlog", log.exportErrorLogs)
 		//apiv1.DELETE("/sys/errorlog/:id", log.DeleteErrorLogs)
-	}
-
-	// 示例
-	{
-		apiv1.POST("/example/upload", example.Upload)
-		apiv1.GET("/example/qrcode", example.Qrcode)
 	}
 
 	return r
