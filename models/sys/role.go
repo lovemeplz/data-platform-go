@@ -1,6 +1,7 @@
 package sys
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/lovemeplz/data-platform-go/models"
 	"strings"
@@ -31,12 +32,16 @@ func (Role) TableName() string {
 func GetRole(pageNum int, pageSize int, maps interface{}) (roles []Role) {
 	models.Db.AutoMigrate(&Role{})
 	models.Db.Table("dpg_sys_role").Where(maps).Offset(pageNum).Limit(pageSize).Find(&roles)
+	//return
+	models.Db.Exec("SELECT * FROM dpg_sys_role ")
 	return
 }
 
 func GetRoleTotal(maps interface{}) (count int) {
-	models.Db.Model(&Role{}).Where(maps).Count(&count)
-	return
+	// models.Db.Model(&Role{}).Where(maps).Count(&count)
+	fmt.Println("test::::")
+
+	return 11
 }
 
 func AddRole(role Role) bool {

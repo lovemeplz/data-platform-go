@@ -114,3 +114,7 @@ func UploadMultiple(c *gin.Context) {
 	})
 
 }
+
+func UploadSlice(c *gin.Context) {
+
+}

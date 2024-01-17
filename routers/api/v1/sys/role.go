@@ -26,20 +26,19 @@ func GetRole(c *gin.Context) {
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
 
-	//if c.Query("roleCode") != "" {
-	//	maps["role_code"] = c.Query("roleCode")
-	//}
-	//if c.Query("roleName") != "" {
-	//	maps["role_name"] = c.Query("roleName")
-	//}
-	//if c.Query("dataStatus") != "" {
-	//	maps["data_status"] = c.Query("dataStatus")
-	//}
+	if c.Query("roleCode") != "" {
+		maps["role_code"] = c.Query("roleCode")
+	}
+	if c.Query("roleName") != "" {
+		maps["role_name"] = c.Query("roleName")
+	}
+	if c.Query("dataStatus") != "" {
+		maps["data_status"] = c.Query("dataStatus")
+	}
 
 	data["list"] = sys.GetRole(util.GetPage(c), setting.AppSetting.PageSize, maps)
+	// data["list"] = sys.GetRole(1, setting.AppSetting.PageSize, maps)
 	data["total"] = sys.GetRoleTotal(maps)
-
-	// fmt.Println("t", sys.GetRole(util.GetPage(c), setting.AppSetting.PageSize, maps))
 
 	code := e.SUCCESS
 
