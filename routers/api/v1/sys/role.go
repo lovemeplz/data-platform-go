@@ -146,3 +146,13 @@ func DeleteRole(c *gin.Context) {
 		"data": "",
 	})
 }
+
+// 测试用
+func Test(c *gin.Context) {
+	sys.Test()
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  e.GetMsg(200),
+		"data": "",
+	})
+}

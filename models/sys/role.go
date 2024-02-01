@@ -32,8 +32,6 @@ func (Role) TableName() string {
 func GetRole(pageNum int, pageSize int, maps interface{}) (roles []Role) {
 	models.Db.AutoMigrate(&Role{})
 	models.Db.Table("dpg_sys_role").Where(maps).Offset(pageNum).Limit(pageSize).Find(&roles)
-	//return
-	models.Db.Exec("SELECT * FROM dpg_sys_role ")
 	return
 }
 
@@ -76,4 +74,10 @@ func (role *Role) BeforeUpdate(scope *gorm.Scope) error {
 	scope.SetColumn("ModifiedOn", time.Now().Unix())
 
 	return nil
+}
+
+func Test() (roles []Role) {
+	//models.Db.AutoMigrate(&Role{})
+	//models.Db.Table("dpg_sys_role").Offset(10).Limit(0).Find(&roles)
+	return
 }

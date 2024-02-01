@@ -8,8 +8,7 @@ import (
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/common"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/log"
 	"github.com/lovemeplz/data-platform-go/routers/api/v1/sys"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/lovemeplz/data-platform-go/routers/api/v1/util"
 	"net/http"
 )
 
@@ -18,7 +17,7 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.StaticFS(upload.GetImagePreviewPath(), http.Dir(upload.GetImageFullPath()))
 
 	apiv1 := r.Group("api/v1")
@@ -75,6 +74,18 @@ func InitRouter() *gin.Engine {
 		//apiv1.GET("/log/errorlog", log.getErrorLogs)
 		//apiv1.POST("/sys/errorlog", log.exportErrorLogs)
 		//apiv1.DELETE("/sys/errorlog/:id", log.DeleteErrorLogs)
+	}
+
+	// 实用工具 短链服务
+
+	{
+		apiv1.GET("/util/shortlink", util.GenShortLink)
+	}
+
+	//  测试用
+
+	{
+		apiv1.GET("/test", sys.Test)
 	}
 
 	return r

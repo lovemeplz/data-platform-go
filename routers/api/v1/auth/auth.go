@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"github.com/lovemeplz/data-platform-go/models/auth"
 	"github.com/lovemeplz/data-platform-go/pkg/logging"
 	"net/http"
@@ -30,7 +29,6 @@ func Login(c *gin.Context) {
 
 	data := make(map[string]interface{})
 	code := e.InvalidParams
-	fmt.Println("test::::", a)
 	if ok {
 		isExist := auth.CheckAuth(account.Username, account.Password)
 		if isExist {
